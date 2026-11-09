@@ -2,30 +2,37 @@
 
 ## 문제 → 원인 → 해결 → 결과
 
-### 1. Discord CRITICAL 알림에 client_ip·stages·incident_id가 비어서 왔다
-- **원인**: CRITICAL 분기만 "인시던트 티켓 생성"·"인시던트 파일 저장" 노드를 추가로 거치면서, WARNING 분기와 달리 입력 데이터 구조가 `body.*`로 중첩되지 않고 평탄화되어 있었다.
-- **해결**: n8n 노드의 실제 Input/Output 패널을 직접 열어 데이터를 확인하고, 경로를 `$json.body.client_ip` 대신 `$json.client_ip`로 수정.
-- **결과**: CRITICAL 알림에 IP·단계·인시던트 번호가 정상 표시됨.
+> 아래 7건은 팀 통합보고서(4-3-10절)에 정리된 시나리오3 문제 해결 과정을 그대로 옮긴 것입니다.
 
-### 2. Discord에 Lockdown 해제 버튼이 안 보였다
-- **원인**: 일반 Incoming Webhook은 메시지 컴포넌트(버튼)를 지원하지 않아 JSON이 맞아도 버튼만 조용히 사라짐.
-- **해결**: Webhook 대신 실제 Discord Bot(Bot token + `/channels/{id}/messages` API)으로 전환.
-- **결과**: Link 버튼 정상 표시.
+### 1. 빨강·초록·노랑 LED가 전혀 켜지지 않음 (파랑만 정상)
+- **원인**: 전원·부품·배선 로직·펌웨어를 순서대로 isolation한 끝에, Thonny REPL로 해당 3개 핀을 직접 제어해도 LED가 안 켜지는 것을 확인 — MCU가 핀에 신호를 내보내는 것 자체는 정상이었고, 문제는 그 핀들이 물려있던 브레드보드 칼럼의 물리적 접촉 불량이었다.
+- **해결**: 접촉이 확인된 새 칼럼(GPIO0·GPIO7·GPIO10)으로 전부 재배선.
+- **결과**: 4색 LED 정상 동작.
 
-### 3. Graylog 알림 템플릿에 변수가 비어서 나왔다
-- **원인**: Event Definition이 Aggregation 타입이고 `client_ip`가 Group-by 필드인데, 템플릿에서 `${event.fields.client_ip}`를 참조해 값이 안 채워짐.
-- **해결**: `${event.group_by_fields.client_ip}`로 수정.
-- **결과**: 알림 본문에 공격자 IP 정상 표시.
+### 2. 빨강 LED가 파랑과 동시 점등 시 깜빡이다 꺼짐
+- **원인**: 두 LED의 +(GPIO 직결) 쪽 배선이 같은 브레드보드 칼럼을 공유해, 서로 다른 GPIO가 동시에 다른 전압을 출력할 때 핀 간 충돌 발생.
+- **해결**: anode 쪽 칼럼을 LED마다 완전히 분리하고, 펌웨어에서도 두 LED가 동시에 HIGH가 되지 않도록 로직 수정(이중 방지).
 
-### 4. LED가 전혀 켜지지 않았다
-- **원인**: 코드 문제가 아니라 브레드보드 특정 칼럼의 접촉 불량(하드웨어 이슈).
-- **해결**: 시리얼 REPL로 핀을 하나씩 직접 테스트하며 범위를 좁혀 원인을 하드웨어로 특정.
-- **결과**: 배선 교체 후 4색 LED 정상 동작. (부저는 동일한 배선 문제로 이번 시연에서는 제외하고 LED 중심으로 진행.)
+### 3. GPIO8을 노랑 LED에 쓰려 했으나 부팅 안정성 우려
+- **원인**: GPIO8·GPIO9는 ESP32-C3의 스트래핑 핀(부팅 모드 선택용)으로, 일반 I/O로 쓰면 리셋 타이밍에 영향을 줄 수 있음.
+- **해결**: 스트래핑 핀이 아닌 GPIO10으로 최종 배정.
 
-### 5. pfSense SSH 연결이 n8n에서만 계속 실패했다
-- **원인**: 비밀번호 인증은 되는데 n8n 내장 ssh2 라이브러리와 pfSense 간 알고리즘 협상이 실패.
-- **해결**: Ed25519 키 기반 인증으로 전환.
-- **결과**: n8n → pfSense 자동 차단 정상 동작.
+### 4. `OSError: Wifi Internal State Error`
+- **원인**: 소프트 리셋 직후 MicroPython Wi-Fi 드라이버의 내부 상태가 간헐적으로 비정상.
+- **해결**: 연결 시도 전 `wlan.active(False)` → 대기 → `wlan.active(True)`로 드라이버를 먼저 초기화.
+
+### 5. `/warning`을 호출해도 LED 색이 안 바뀌는 것처럼 보임
+- **원인**: 버그가 아니라 의도된 설계 — Lockdown 상태에서는 `/warning` 호출이 무시되어, 확정된 대응 단계가 경고로 임의 하향되지 않음.
+- **해결**: `/unlock`으로 먼저 초기화한 뒤 `/warning` 재호출로 정상 동작(노랑 전환) 재확인.
+
+### 6. n8n ESP32 노드가 플레이스홀더 URL/토큰 상태로 방치
+- **원인**: 초기 워크플로 설계 시점엔 실제 보드 IP가 확정되지 않아 `<ESP32_IP>`, `<IOT_AUTH_TOKEN>` 같은 임시값으로 남아 있었음.
+- **해결**: 실제 보드 IP(192.168.7.81)와 AUTH_TOKEN으로 교체 후 재게시.
+
+### 7. n8n → pfSense SSH 연동이 반복적으로 handshake 타임아웃
+- **원인**: Host/Port/계정, n8n의 "Test connection"까지 전부 정상이었지만 실제 노드 실행에서만 매번 실패. n8n 컨테이너 안에서 시스템 OpenSSH로 동일 명령을 직접 실행하면 즉시 성공해, 네트워크·pfSense·인증정보 문제는 배제. 남은 차이는 접속 클라이언트뿐 — n8n 내장 SSH 노드(ssh2, Password 인증)가 pfSense sshd와 암호화 알고리즘 협상에 실패하는 것으로 결론.
+- **해결**: n8n 컨테이너 안에서 Ed25519 키 쌍을 생성해 pfSense Authorized SSH Keys에 등록하고, credential을 Password에서 Private Key로 교체.
+- **결과**: pfSense 차단·ESP32 Lockdown을 포함한 CRITICAL 분기 전 노드가 한 번에 성공.
 
 ## 리허설·본발표 피드백 반영
 

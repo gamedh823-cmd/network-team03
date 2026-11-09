@@ -40,7 +40,7 @@ EngineSquare는 웹 애플리케이션과 API 서버에서 발생하는 보안 �
 | [`web-app/`](./web-app/) | 공통 웹앱 (`:5001`). 게시판과 보안 관제 대시보드 및 관리자 페이지 제공 | [`web-app/README.md`](./web-app/README.md) |
 | [`scenario1-middleware/`](./scenario1-middleware/) | 시나리오 1: 로그 버퍼링 및 트래픽 제어 미들웨어 (`:8000`, `:9100`) | [`scenario1-middleware/README.md`](./scenario1-middleware/README.md)<br/>[`SCENARIO1_SETUP_GUIDE.md`](./scenario1-middleware/SCENARIO1_SETUP_GUIDE.md) |
 | [`scenario2-api-key-compromised/`](./scenario2-api-key-compromised/) | 시나리오 2: 유출 API 키 탐지 및 자동 폐기·재발급·IP 차단 | [`scenario2-api-key-compromised/README.md`](./scenario2-api-key-compromised/README.md) |
-| [`scenario3-killchain/`](./scenario3-killchain/) | 시나리오 3: 킬체인 상관분석 및 IoT 장비 제어 차단 | [`scenario3-killchain.md`](./scenario3-killchain/docs/scenario3-killchain.md)<br/>[`scenario1-integration.md`](./scenario3-killchain/docs/scenario1-integration.md)<br/>[`personal-work-log.md`](./scenario3-killchain/docs/personal-work-log.md)<br/>[`improvements-and-reflections.md`](./scenario3-killchain/docs/improvements-and-reflections.md) |
+| [`scenario3-killchain/`](./scenario3-killchain/) | 시나리오 3: 킬체인 상관분석 및 IoT 장비 제어 차단 | [`scenario3-killchain.md`](./scenario3-killchain/docs/scenario3-killchain.md)<br/>[`scenario1-integration.md`](./scenario3-killchain/docs/scenario1-integration.md)<br/>[`personal-work-log.md`](./scenario3-killchain/docs/personal-work-log.md)<br/>[`verification-results.md`](./scenario3-killchain/docs/verification-results.md)<br/>[`improvements-and-reflections.md`](./scenario3-killchain/docs/improvements-and-reflections.md) |
 | [`tests/`](./tests/) | 인시던트 ID 발급 규칙 및 킬체인 수신 엔드포인트 단위 테스트 | [`tests/README.md`](./tests/README.md) |
 
 ---
