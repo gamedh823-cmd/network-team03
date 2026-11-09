@@ -1,5 +1,10 @@
 # EngineSquare 보안 관제 및 SOAR 자동 대응 시스템
 
+> **개인 포트폴리오 저장소 안내**
+> - 팀 원본 저장소: [altdmfk/network-team03](https://github.com/altdmfk/network-team03)
+> - 팀원: 강아름(시나리오 1 담당), 김라연(시나리오 2 담당), 유지원(팀장 · 시나리오 3 담당)
+> - 이 저장소(`gamedh823-cmd/network-team03`)는 유지원 개인 포트폴리오용 포크입니다. 저는 팀장으로서 전체 아키텍처를 통합하고 **시나리오 3(킬체인 상관분석 · IoT 장비 제어 차단)** 을 설계·구현했으며, Graylog 상관분석 규칙, n8n SOAR 워크플로, ESP32-C3 펌웨어, pfSense 연동을 전담했습니다. 시나리오 1·2 코드는 해당 팀원이 작성한 것으로, 통합 테스트·전체 아키텍처 정리·발표자료 취합 과정에서만 함께 다뤘습니다.
+
 EngineSquare는 웹 애플리케이션과 API 서버에서 발생하는 보안 이벤트를 수집하고 분석하여 자동 대응하는 통합 보안 관제 프로젝트입니다.
 로그 버퍼링 미들웨어와 SIEM(Graylog·Wazuh) 및 SOAR(n8n)를 연동해 대량 트래픽 완충부터 유출 API 키 차단과 킬체인 상관분석까지 3개 시나리오를 처리합니다.
 
@@ -35,7 +40,7 @@ EngineSquare는 웹 애플리케이션과 API 서버에서 발생하는 보안 �
 | [`web-app/`](./web-app/) | 공통 웹앱 (`:5001`). 게시판과 보안 관제 대시보드 및 관리자 페이지 제공 | [`web-app/README.md`](./web-app/README.md) |
 | [`scenario1-middleware/`](./scenario1-middleware/) | 시나리오 1: 로그 버퍼링 및 트래픽 제어 미들웨어 (`:8000`, `:9100`) | [`scenario1-middleware/README.md`](./scenario1-middleware/README.md)<br/>[`SCENARIO1_SETUP_GUIDE.md`](./scenario1-middleware/SCENARIO1_SETUP_GUIDE.md) |
 | [`scenario2-api-key-compromised/`](./scenario2-api-key-compromised/) | 시나리오 2: 유출 API 키 탐지 및 자동 폐기·재발급·IP 차단 | [`scenario2-api-key-compromised/README.md`](./scenario2-api-key-compromised/README.md) |
-| [`scenario3-killchain/`](./scenario3-killchain/) | 시나리오 3: 킬체인 상관분석 및 IoT 장비 제어 차단 | [`scenario3-killchain.md`](./scenario3-killchain/docs/scenario3-killchain.md)<br/>[`scenario1-integration.md`](./scenario3-killchain/docs/scenario1-integration.md) |
+| [`scenario3-killchain/`](./scenario3-killchain/) | 시나리오 3: 킬체인 상관분석 및 IoT 장비 제어 차단 | [`scenario3-killchain.md`](./scenario3-killchain/docs/scenario3-killchain.md)<br/>[`scenario1-integration.md`](./scenario3-killchain/docs/scenario1-integration.md)<br/>[`personal-work-log.md`](./scenario3-killchain/docs/personal-work-log.md)<br/>[`improvements-and-reflections.md`](./scenario3-killchain/docs/improvements-and-reflections.md) |
 | [`tests/`](./tests/) | 인시던트 ID 발급 규칙 및 킬체인 수신 엔드포인트 단위 테스트 | [`tests/README.md`](./tests/README.md) |
 
 ---
@@ -87,6 +92,8 @@ EngineSquare는 웹 애플리케이션과 API 서버에서 발생하는 보안 �
   # 실제 API 서버 공격 + Graylog 표준 이벤트 연동 시연
   python scenario3-killchain/scripts/demo_killchain_live.py
   ```
+- **ESP32-C3 펌웨어 설정** (`scenario3-killchain/pico-firmware/`): `config.py.example`을 `config.py`로 복사해 Wi-Fi SSID/비밀번호, n8n과 공유하는 `AUTH_TOKEN`, LED 핀 번호를 채운 뒤 `main.py`와 함께 Thonny 등으로 보드에 업로드합니다. 시리얼 콘솔에 찍히는 `Wi-Fi 연결됨: <ip>` 로그로 보드 IP를 확인해 n8n/테스트 스크립트에 반영합니다. (`config.py`는 비밀값을 담고 있어 `.gitignore`로 제외되어 있습니다.)
+- **Graylog / n8n 설정 파일**: Graylog에는 [`graylog/scenario3_killchain_content_pack.json`](./scenario3-killchain/graylog/scenario3_killchain_content_pack.json)을 System → Content Packs에서 업로드하고, n8n에는 [`n8n-workflows/scenario3-killchain-response.json`](./scenario3-killchain/n8n-workflows/scenario3-killchain-response.json)을 Import from File로 불러오면 상관분석 규칙과 자동 대응 워크플로가 그대로 재현됩니다. pfSense 차단 노드는 SSH(Ed25519 키) credential을 새로 등록해야 합니다.
 
 ---
 

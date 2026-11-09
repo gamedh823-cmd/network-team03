@@ -1,0 +1,15 @@
+# ESP32-C3 SuperMini 설정 템플릿. config.py 로 복사한 뒤 본인 환경에 맞게 채워서
+# (gitignore 처리되어 있어 커밋되지 않습니다) 보드에 main.py 와 함께 업로드하세요.
+
+WIFI_SSID = "YOUR_WIFI_SSID"
+WIFI_PASSWORD = "YOUR_WIFI_PASSWORD"
+
+# n8n -> ESP32 요청 인증에 쓰는 공유 토큰. n8n 워크플로의 X-Auth-Token 헤더 값과 동일해야 함
+AUTH_TOKEN = "CHANGE_ME_SHARED_SECRET"
+
+# LED 핀 배치 (기본값은 팀 하드웨어 배선 기준, 보드가 다르면 조정)
+LED_BLUE_PIN = 2     # 부팅
+LED_GREEN_PIN = 7    # 정상
+LED_YELLOW_PIN = 10  # 경고 (WARNING)
+LED_RED_PIN = 0      # 위급 (CRITICAL / Lockdown)
+BUZZER_PIN = 4        # 현재 미사용 (배선 문제로 비활성)
