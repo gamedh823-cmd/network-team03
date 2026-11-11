@@ -86,7 +86,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://discord.com/api/v10/channels/1567368969524879513/messages",
+        "url": "https://discord.com/api/v10/channels/<DISCORD_CHANNEL_ID>/messages",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [

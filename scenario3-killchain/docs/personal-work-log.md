@@ -26,3 +26,10 @@
 - n8n 워크플로 export(`scenario3-killchain/n8n-workflows/scenario3-killchain-response.json`) — 커밋 이력으로 수정 과정 확인 가능
 - Graylog Content Pack(`scenario3-killchain/graylog/scenario3_killchain_content_pack.json`)
 - 최종 발표자료(`최종_제출/ALEPH_3조_발표자료_최종.pptx`) 슬라이드 27~45 — 시연·문제해결 캡처 포함
+
+## 재현·검증 기록 링크
+
+- 단계별 명령·기대 결과·실측 결과·캡처: [`reproduction-guide.md`](reproduction-guide.md), [`verification-results.md`](verification-results.md), [`images/`](images/)
+- 새 PC 설치 절차와 "팀원 PC에만 있던 설정" 제거 내역: [`../../../docs/SETUP-FROM-SCRATCH.md`](../../../docs/SETUP-FROM-SCRATCH.md) 12절
+- 커밋 이력: https://github.com/gamedh823-cmd/network-team03/commits/main (팀 원본: https://github.com/altdmfk/network-team03/commits/main)
+- 팀원 코드 출처: 시나리오 1(강아름) `scenario1-middleware/`, 시나리오 2(김라연) `scenario2-api-key-compromised/`, 공용 API·웹앱은 팀 공동 — 본 저장소에서 개인 수정은 민감정보 제거(자리표시자화)와 DB 비밀번호 기본값 제거뿐입니다.

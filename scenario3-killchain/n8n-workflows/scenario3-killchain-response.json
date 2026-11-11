@@ -53,7 +53,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "http://192.168.7.81/lockdown",
+        "url": "http://<ESP32_IP>/lockdown",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -119,7 +119,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://discord.com/api/v10/channels/1567368969524879513/messages",
+        "url": "https://discord.com/api/v10/channels/<DISCORD_CHANNEL_ID>/messages",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
@@ -146,7 +146,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "http://192.168.7.81/warning",
+        "url": "http://<ESP32_IP>/warning",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -171,7 +171,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://discord.com/api/v10/channels/1567368969524879513/messages",
+        "url": "https://discord.com/api/v10/channels/<DISCORD_CHANNEL_ID>/messages",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
@@ -211,7 +211,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "http://192.168.3.8:5000/automation/killchain-response",
+        "url": "http://<API_SERVER_IP>:5000/automation/killchain-response",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [

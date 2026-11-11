@@ -74,7 +74,7 @@ Wazuh의 과거 로그 재처리 확인을 당시의 실시간 탐지로 표현�
 | `ENGINESQUARE_DB_HOST` | `127.0.0.1` |
 | `ENGINESQUARE_DB_PORT` | `3306` |
 | `ENGINESQUARE_DB_USER` | `root` |
-| `ENGINESQUARE_DB_PASSWORD` | `123456` |
+| `ENGINESQUARE_DB_PASSWORD` | (없음 — 반드시 직접 지정, `.env.example` 참고) |
 | `ENGINESQUARE_DB_NAME` | `enginesquare` |
 
 설정이 다르면 각 서버를 실행할 PowerShell 창에 같은 환경변수를 지정합니다. 아래 비밀번호는 실제 MySQL 설정값으로 바꿉니다.

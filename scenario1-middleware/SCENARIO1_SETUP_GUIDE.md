@@ -194,7 +194,7 @@ Graylog가 내부망의 n8n 웹훅 엔드포인트로 HTTP 요청을 보낼 수 
    - **Normalize Brute Force Event**: 이벤트 페이로드에서 `client_ip`, `detection_reason` 등 정규화
    - **Block Attacker IP**: `{{ $env.AUTOMATION_WEBHOOK_BASE_URL || 'http://host.docker.internal:5000' }}/automation/revoke-key`를 호출하여 MySQL `blocked_ips` 테이블에 공격자 IP 등록 및 티켓 생성
    - **Format Alert Message**: 텍스트 알림 포맷 구성
-   - **Send Discord Notification**: Discord Bot REST API(`https://discord.com/api/v10/channels/1567368969524879513/messages`)로 리치 임베드 및 `[📊 실시간 대시보드 열기]` 링크 버튼(`style: 5`) 전송
+   - **Send Discord Notification**: Discord Bot REST API(`https://discord.com/api/v10/channels/<DISCORD_CHANNEL_ID>/messages`)로 리치 임베드 및 `[📊 실시간 대시보드 열기]` 링크 버튼(`style: 5`) 전송
    - **Respond to Graylog**: Graylog에 성공 결과 반환
 5. Discord Bot 인증 방식 설정:
    - 보안을 위해 Git 저장소 및 워크플로우 파일에는 실제 봇 토큰을 평문으로 남기지 않습니다.

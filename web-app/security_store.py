@@ -54,7 +54,7 @@ class SecurityStore:
             host=os.getenv("ENGINESQUARE_DB_HOST", "127.0.0.1"),
             port=int(os.getenv("ENGINESQUARE_DB_PORT", "3306")),
             user=os.getenv("ENGINESQUARE_DB_USER", "root"),
-            password=os.getenv("ENGINESQUARE_DB_PASSWORD", "123456"),
+            password=os.getenv("ENGINESQUARE_DB_PASSWORD", ""),
             database=os.getenv("ENGINESQUARE_DB_NAME", "enginesquare"),
             charset="utf8mb4", cursorclass=DictCursor,
             autocommit=True, connect_timeout=2, read_timeout=2, write_timeout=2,

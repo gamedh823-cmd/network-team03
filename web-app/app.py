@@ -70,7 +70,7 @@ def ticket_action_url():
 app.config["MYSQL_HOST"] = os.getenv("ENGINESQUARE_DB_HOST", "127.0.0.1")
 app.config["MYSQL_PORT"] = int(os.getenv("ENGINESQUARE_DB_PORT", "3306"))
 app.config["MYSQL_USER"] = os.getenv("ENGINESQUARE_DB_USER", "root")
-app.config["MYSQL_PASSWORD"] = os.getenv("ENGINESQUARE_DB_PASSWORD", "123456")
+app.config["MYSQL_PASSWORD"] = os.getenv("ENGINESQUARE_DB_PASSWORD", "")
 app.config["MYSQL_DATABASE"] = os.getenv("ENGINESQUARE_DB_NAME", "enginesquare")
 
 

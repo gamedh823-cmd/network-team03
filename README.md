@@ -41,6 +41,8 @@ EngineSquare는 웹 애플리케이션과 API 서버에서 발생하는 보안 �
 | [`scenario1-middleware/`](./scenario1-middleware/) | 시나리오 1: 로그 버퍼링 및 트래픽 제어 미들웨어 (`:8000`, `:9100`) | [`scenario1-middleware/README.md`](./scenario1-middleware/README.md)<br/>[`SCENARIO1_SETUP_GUIDE.md`](./scenario1-middleware/SCENARIO1_SETUP_GUIDE.md) |
 | [`scenario2-api-key-compromised/`](./scenario2-api-key-compromised/) | 시나리오 2: 유출 API 키 탐지 및 자동 폐기·재발급·IP 차단 | [`scenario2-api-key-compromised/README.md`](./scenario2-api-key-compromised/README.md) |
 | [`scenario3-killchain/`](./scenario3-killchain/) | 시나리오 3: 킬체인 상관분석 및 IoT 장비 제어 차단 | [`scenario3-killchain.md`](./scenario3-killchain/docs/scenario3-killchain.md)<br/>[`scenario1-integration.md`](./scenario3-killchain/docs/scenario1-integration.md)<br/>[`personal-work-log.md`](./scenario3-killchain/docs/personal-work-log.md)<br/>[`verification-results.md`](./scenario3-killchain/docs/verification-results.md)<br/>[`improvements-and-reflections.md`](./scenario3-killchain/docs/improvements-and-reflections.md) |
+| [`docs/SETUP-FROM-SCRATCH.md`](./docs/SETUP-FROM-SCRATCH.md) | **새 PC 기준 전체 설치·실행 가이드**(포트·주소·pfSense·n8n·Graylog) | 현재 문서 |
+| [`scenario3-killchain/docs/reproduction-guide.md`](./scenario3-killchain/docs/reproduction-guide.md) | 공격→수집→탐지→대응→복구 재현 절차·기대/실측 결과 | 〃 |
 | [`tests/`](./tests/) | 인시던트 ID 발급 규칙 및 킬체인 수신 엔드포인트 단위 테스트 | [`tests/README.md`](./tests/README.md) |
 
 ---
